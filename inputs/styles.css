@@ -1,0 +1,125 @@
+@font-face{
+    font-family: "JetBrainsMono";
+    src: url("JetBrainsMono/JetBrainsMono-Regular.ttf") format("truetype");
+    }
+
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "JetBrainsMono";
+    }
+
+body{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    flex-direction:column;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+    }
+
+.phoneInput
+{
+    font-size: 30px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    min-width: 300px;
+    max-width: 400px;
+    width: 90%;
+    }
+
+.phone_changerLink
+{
+    margin-bottom: 20px;
+}
+
+input:focus {outline: none;}
+.placeholder {flex: 1;}
+.terms_checkbox {margin-top: 15px;}
+
+a{color:blue; text-decoration: none;}
+a:hover{color: dodgerblue;}
+
+
+.ticketForm{
+    margin-top: 20px;
+    padding: 0px 100px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    gap: 20px;
+    position: relative;
+    flex-direction:row;
+    display: flex;
+    background-color: #210a7e;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.direction{
+    position: relative;
+    flex-direction:row;
+    display: flex;
+    gap: 2px;
+}
+
+select{
+    appearance: none;
+    padding: 11px 0px;
+    padding-left: 10px;
+    padding-right: 50px;
+    background: hsla(0,0%,100%,.44);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+select:hover{
+    background-color: white;
+    color: black;
+}
+
+option{
+    background-color: white;
+    color: black;
+    border: none;
+    outline: none;
+
+}
+
+.from{
+    border-radius: 5px 0px 0px 5px;
+}
+.to{
+    border-radius: 0px 5px 5px 0px;
+}
+
+
+.dates{
+    position: relative;
+    flex-direction:row;
+    display: flex;
+    gap: 5px;
+}
+
+
+
+.date_from, .date_to{
+    appearance: none;
+    padding: 10px 5px;
+    background: hsla(0,0%,100%,.44);
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+}
+
+.findBtn{
+    padding: 10px 30px;
+    background-color: #e84e5b;
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+}

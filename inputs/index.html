@@ -1,0 +1,82 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="phoneinput.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            document.querySelector('input').focus();
+            document.getElementById('link').innerHTML.focus();
+        })
+
+        function ru_func() {
+            document.getElementById('link').innerHTML = "<a href='javascript:en_func()'>У меня номер РФ</a>";
+        }
+        function en_func() {
+            document.getElementById('link').innerHTML = "<a href='javascript:ru_func()'>У меня номер другой страны</a>";
+        }
+    </script>
+
+</head>
+<body>
+    <input type="tel" class="phoneInput" data-tel-input placeholder="Телефон" maxlength="18"/>
+
+    <div class="phones" style="margin:10px 0;">
+        <label for="">
+            +79777751713
+        </label>
+        <label for="">
+            +7(977)775-17-13
+        </label>
+        <label for="">
+            89777751713
+        </label>
+        <label for="">
+            8(977)775-17-13
+        </label>
+    </div>
+
+    <div id='link' class="phone_changerLink"><a href='javascript:ru_func()'>У меня номер другой страны</a></div>
+    <input type="checkbox" name="terms" id="terms_checkbox">
+
+    <div class="ticketForm">
+        <div class="direction">
+            <div class="fromInput">
+                <select required class="from">
+                    <option value="" disabled selected hidden>Откуда</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+
+
+            <div class="toInput">
+                <select required class="to">
+                    <option value="" disabled selected hidden>Куда</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="dates">
+            <div class="date_fromInput">
+                <input type="date" name="" class="date_from" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+            </div>
+            <div class="date_toInput">
+                <input type="date" name="" class="date_to">
+            </div>
+        </div>
+        <div class="find__tickets">
+            <button class="findBtn">Найти услугу</button>
+        </div>
+    </div>
+</body>
+</html>

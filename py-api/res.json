@@ -1,0 +1,243 @@
+{
+    "responseCode": 0,
+    "responseMessage": "Запрос обработан успешно",
+    "data": {
+      "airports": [
+        {
+          "id": 1,
+          "title": "Шереметьево",
+          "code_iata": "SVO",
+          "city": "Москва",
+          "terminals": [
+            {
+              "id": 14,
+              "title": "Терминал D"
+            },
+            {
+              "id": 15,
+              "title": "Терминал B"
+            },
+            {
+              "id": 16,
+              "title": "Терминал F"
+            },
+            {
+              "id": 17,
+              "title": "Терминал E"
+            },
+            {
+              "id": 18,
+              "title": "Терминал C"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Домодедово",
+          "code_iata": "DME",
+          "city": "Москва",
+          "terminals": []
+        },
+        {
+          "id": 3,
+          "title": "Внуково",
+          "code_iata": "VKO",
+          "city": "Москва",
+          "terminals": []
+        },
+        {
+          "id": 20,
+          "title": "Петропавловск-Камчатский",
+          "code_iata": "PKC",
+          "city": "Петропавловск-Камчатский",
+          "terminals": []
+        },
+        {
+          "id": 21,
+          "title": "Аэропорт Симферо́поль",
+          "code_iata": "SIP",
+          "city": "Симферополь",
+          "terminals": []
+        },
+        {
+          "id": 22,
+          "title": "Кневичи",
+          "code_iata": "VVO",
+          "city": "Владивосток",
+          "terminals": []
+        },
+        {
+          "id": 23,
+          "title": "Сочи",
+          "code_iata": "AER",
+          "city": "Сочи",
+          "terminals": []
+        },
+        {
+          "id": 24,
+          "title": "Аэропорт Хабаровск",
+          "code_iata": "KHV",
+          "city": "Хабаровск",
+          "terminals": []
+        },
+        {
+          "id": 25,
+          "title": "Толмачёво",
+          "code_iata": "OVB",
+          "city": "Новосибирск",
+          "terminals": []
+        },
+        {
+          "id": 26,
+          "title": "Пулково",
+          "code_iata": "LED",
+          "city": "Санкт-Петербург",
+          "terminals": []
+        },
+        {
+          "id": 27,
+          "title": "Аэропорт Казань",
+          "code_iata": "KZN",
+          "city": "Казань",
+          "terminals": [
+            {
+              "id": 42,
+              "title": "Терминал 2",
+              "code_iata": "KZN"
+            },
+            {
+              "id": 43,
+              "title": "Терминал 1A",
+              "code_iata": "KZN"
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "title": "Павелецкий вокзал",
+          "code_iata": "XRK",
+          "city": "Москва",
+          "terminals": []
+        },
+        {
+          "id": 29,
+          "title": "Ленинградский вокзал",
+          "code_iata": "ZKD",
+          "city": "Москва",
+          "terminals": []
+        },
+        {
+          "id": 44,
+          "title": "Геленджик",
+          "code_iata": "GDZ",
+          "city": "Геленджик",
+          "terminals": []
+        },
+        {
+          "id": 45,
+          "title": "Оренбург",
+          "code_iata": "REN",
+          "city": "Оренбург",
+          "terminals": []
+        },
+        {
+          "id": 46,
+          "title": "Красноярск",
+          "code_iata": "KJA",
+          "city": "Красноярск",
+          "terminals": []
+        },
+        {
+          "id": 48,
+          "title": "Мурманск",
+          "code_iata": "MMK",
+          "city": "Мурманск",
+          "terminals": []
+        },
+        {
+          "id": 49,
+          "title": "Пашковский",
+          "code_iata": "KRR",
+          "city": "Краснодар",
+          "terminals": []
+        },
+        {
+          "id": 50,
+          "title": "Анапа",
+          "code_iata": "AAQ",
+          "city": "Анапа",
+          "terminals": []
+        },
+        {
+          "id": 51,
+          "title": "Нижний Новгород",
+          "code_iata": "GOJ",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 52,
+          "title": "Самара",
+          "code_iata": "KUF",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 53,
+          "title": "Ростов-на-Дону",
+          "code_iata": "ROV",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 54,
+          "title": "Екатеринбург",
+          "code_iata": "SVX",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 55,
+          "title": "Новый Уренгой",
+          "code_iata": "NUX",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 56,
+          "title": "Саратов",
+          "code_iata": "GSV",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 57,
+          "title": "Южно-Сахалинск",
+          "code_iata": "UUS",
+          "city": "",
+          "terminals": []
+        },
+        {
+          "id": 58,
+          "title": "Жуковский",
+          "code_iata": "ZIA",
+          "city": "Москва",
+          "terminals": []
+        },
+        {
+          "id": 59,
+          "title": "Уфа",
+          "code_iata": "UFA",
+          "city": "Уфа",
+          "terminals": []
+        },
+        {
+          "id": 60,
+          "title": "Набережные челны",
+          "code_iata": "NBC",
+          "city": "Набережные Челны",
+          "terminals": []
+        }
+      ]
+    }
+  }
