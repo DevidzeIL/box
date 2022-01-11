@@ -90,25 +90,60 @@ def get_list_categories(airport_code, language_code):
 # !!!-!!!-!!! А где вообще категории в points?
 def get_list_points_by_category(airport_code, category_id, language_code):
     points_dict = {}
+    # points_params = {
+    #     'airport_code': airport_code,
+    #     'products_category': category_id,
+    #     'language_code': language_code
+    # }
+
     points_params = {
-        'airport_code': airport_code,
-        'products_category': category_id,
-        'language_code': language_code
+        'airport_code': 'ZIA',
+        # 'products_category': '4',
+        'language_code': 'ru'
     }
 
-    points_path = 'api/v1/seller/points'
+    points_path = 'api/v2/seller/points'
     points_response = json.loads(requests.get(url+points_path, params=points_params, headers=headers).text)
+    print('\n123')
+    # print(points_response['data']['points'])
+    print('123\n')
+
+    if points_response['data']['points'] != []:
+        for point in points_response['data']['points']:
+            for product in point['act_types']['groups']['products']:
+                print(product['id'])
+
+
+    else:
+        print('222')
+
+
     # !!!-!!!-!!! Записать список точек по категории в словарь
+    # if points_response['data']['points'] != []:
+    #     for point in points_response['data']['points']:
+    #         for product in point['act_types']['groups']['products']:
+    #             if 'max_products_quantity' in point['custom_info']:
+    #                 points_dict.setdefault(product['id'], []).append(random.randint(1, point['custom_info']['max_products_quantity']))
+    #             else:
+    #                 points_dict.setdefault(product['id'], []).append(0)
+
     return points_dict
 
 
 def choose_point(points_dict):
-    return
+    product_id = random.choice(list(points_dict))
+    product_quantity = random.choice(points_dict[product_id])
+
+    return product_id, product_quantity
 
 
-def add_to_cart(airport_id, cart_token):
+def add_to_cart(airport_id, cart_token, product_id, product_quantity):
     body_request = {
         "items": [
+            {
+                "id": product_id,
+                "quantity": product_quantity
+            },
         ],
 
         'airport_id': airport_id,
@@ -118,7 +153,7 @@ def add_to_cart(airport_id, cart_token):
 
     item_group_path = 'api/v2/seller/userCart/itemGroup'
     item_group_response = json.loads(requests.post(url+item_group_path, json=body_request, headers=headers).text)
-    return
+    return item_group_response
 
 
 def open_cart(cart_token):
@@ -182,27 +217,29 @@ def main():
         print('\nLanguage ->', lang)
 
         for airport_id in airports_chooses:
-            print('\nAirport ID ->', airport_id)
+            # print('\nAirport CODE ->', airports_chooses[airport_id])
 
             categories_dict = get_list_categories(airports_chooses[airport_id], lang)
-            print(categories_dict)
+            # print(categories_dict)
 
             for category_id in categories_dict:
-                print('Category ID ->', category_id)
+                # print('Category ID ->', category_id)
 
                 points_dict = get_list_points_by_category(airports_chooses[airport_id], category_id, lang)
-                choose_point(points_dict)
-                add_to_cart(airport_id, cart_token)
 
-            open_cart(cart_token)
-            confirm_cart(cart_token)
+            #     product_id, product_quantity = choose_point(points_dict)
 
-            register_customer()
-            confirm_customer()
-            login_customer()
+            #     add_to_cart(airport_id, cart_token, product_id, product_quantity)
 
-            get_customer_profile()
-            get_customer_cart(cart_token)
+            # open_cart(cart_token)
+            # confirm_cart(cart_token)
+
+            # register_customer()
+            # confirm_customer()
+            # login_customer()
+
+            # get_customer_profile()
+            # get_customer_cart(cart_token)
 
 
 

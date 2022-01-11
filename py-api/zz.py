@@ -41,6 +41,8 @@ def test_airport(url, headers, airports_dict):
 def choose_product(pointsResponse):
     product_dict = {}
 
+    print ('\nПРОВЕРКА\n', pointsResponse, '\nПРОВЕРКА\n')
+
     # Записываем продукты и количество в список
     for point in pointsResponse['data']['points']:
         for product in point['products']:
