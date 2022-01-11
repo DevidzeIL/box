@@ -1,5 +1,4 @@
 import random
-from typing import ItemsView
 import requests
 import json
 
