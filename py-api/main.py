@@ -5,7 +5,8 @@ import datetime
 
 
 token = '7afd5bb7a750f431b2d10ccb4c347b741c0cea18d7b65b3a85d7739f7e2657ea'
-url = 'https://dev.api.maocloud.ru/'
+url_partnership = 'https://dev.api.maocloud.ru/'
+url_mileonair = 'https://developer.mileonair.com/'
 
 headers={'Authorization': f'Bearer {token}'}
 language_code = ['ru','en']
@@ -17,14 +18,14 @@ def get_customer_token(phone):
     }
 
     token_path = 'api/v2/seller/...'
-    token_response = json.loads(requests.post(url+token_path, params=token_params).text)
+    token_response = json.loads(requests.post(url_partnership+token_path, params=token_params).text)
     token = token_response['data']['token']
     return token
 
 
 def get_customer_cart_token():
     cart_token_path = 'api/v2/seller/userCart'
-    cart_token_response = json.loads(requests.post(url+cart_token_path, headers=headers).text)
+    cart_token_response = json.loads(requests.post(url_partnership+cart_token_path, headers=headers).text)
     cart_token = cart_token_response['data']['token']
     return cart_token
 
@@ -45,7 +46,7 @@ def choose_dates():
 def get_list_airports():
     airports_dict = {}
     airports_path = 'api/v1/seller/airports'
-    airports_response = json.loads(requests.get(url+airports_path, headers=headers).text)
+    airports_response = json.loads(requests.get(url_partnership+airports_path, headers=headers).text)
     for airports in airports_response['data']['airports']:
         airports_dict.setdefault(airports['id'], []).append(airports['code_iata'])
     return airports_dict
@@ -81,7 +82,7 @@ def get_list_categories(airport_code, language_code):
     }
 
     categories_path = 'api/v1/seller/serviceCategories'
-    categories_response = json.loads(requests.get(url+categories_path, params=categories_params, headers=headers).text)
+    categories_response = json.loads(requests.get(url_partnership+categories_path, params=categories_params, headers=headers).text)
     for categories in categories_response['data']['categories']:
         categories_dict.setdefault(categories['id'], []).append(categories['name'])
     return categories_dict
@@ -89,7 +90,7 @@ def get_list_categories(airport_code, language_code):
 
 # !!!-!!!-!!! А где вообще категории в points?
 def get_list_points_by_category(airport_code, category_id, language_code):
-    points_dict = {}
+    products_dict = {}
     # points_params = {
     #     'airport_code': airport_code,
     #     'products_category': category_id,
@@ -97,68 +98,75 @@ def get_list_points_by_category(airport_code, category_id, language_code):
     # }
 
     points_params = {
-        'airport_code': 'ZIA',
-        # 'products_category': '4',
+        'airport_code': 'SVO',
+        'products_category': '3',
         'language_code': 'ru'
     }
 
     points_path = 'api/v2/seller/points'
-    points_response = json.loads(requests.get(url+points_path, params=points_params, headers=headers).text)
-    print('\n123')
-    # print(points_response['data']['points'])
-    print('123\n')
+    points_response = json.loads(requests.get(url_partnership+points_path, params=points_params, headers=headers).text)
 
     if points_response['data']['points'] != []:
         for point in points_response['data']['points']:
-            for product in point['act_types']['groups']['products']:
-                print(product['id'])
+            for act_type in point['act_types']:
+                for group in act_type['groups']:
+                    for product in group['products']:
+                        products_dict.setdefault(product['id'], []).append(0)
+
+            # if 'max_products_quantity' in point['custom_info']:
+            #     # products_dict.setdefault(product['id'], []).append(random.randint(1, point['custom_info']['max_products_quantity']))
+            #     print('40')
 
 
     else:
-        print('222')
+        print('Нет точек ')
+
+    print('\n', products_dict, '\n')
+
+    return products_dict
 
 
-    # !!!-!!!-!!! Записать список точек по категории в словарь
-    # if points_response['data']['points'] != []:
-    #     for point in points_response['data']['points']:
-    #         for product in point['act_types']['groups']['products']:
-    #             if 'max_products_quantity' in point['custom_info']:
-    #                 points_dict.setdefault(product['id'], []).append(random.randint(1, point['custom_info']['max_products_quantity']))
-    #             else:
-    #                 points_dict.setdefault(product['id'], []).append(0)
-
-    return points_dict
-
-
-def choose_point(points_dict):
-    product_id = random.choice(list(points_dict))
-    product_quantity = random.choice(points_dict[product_id])
+def choose_point(products_dict):
+    product_id = random.choice(list(products_dict))
+    product_quantity = random.choice(products_dict[product_id])
 
     return product_id, product_quantity
 
 
-def add_to_cart(airport_id, cart_token, product_id, product_quantity):
+def add_to_cart(airport_id, cart_token, product_id, product_quantity, estimated_date):
+    print(airport_id)
+    print(cart_token)
+    print(product_id)
+    print(product_quantity)
+    print(estimated_date)
+
     body_request = {
         "items": [
             {
                 "id": product_id,
                 "quantity": product_quantity
-            },
+            }
         ],
+        "airport_id": airport_id,
+        "estimated_date": estimated_date,
 
-        'airport_id': airport_id,
-
-        'token': cart_token
+        "token": cart_token
     }
 
     item_group_path = 'api/v2/seller/userCart/itemGroup'
-    item_group_response = json.loads(requests.post(url+item_group_path, json=body_request, headers=headers).text)
+    item_group_response = json.loads(requests.post(url_partnership+item_group_path, json=body_request, headers=headers).text)
+
+    print('\n111\n')
+    print(item_group_response)
+    print('\n111\n')
+
     return item_group_response
+
 
 
 def open_cart(cart_token):
     cart_path = 'api/v2/seller/userCart?token=' + cart_token
-    cart_response = json.loads(requests.get(url+cart_path, headers=headers).text)
+    cart_response = json.loads(requests.get(url_partnership+cart_path, headers=headers).text)
     return cart_response
 
 
@@ -168,25 +176,79 @@ def confirm_cart(cart_token):
     }
 
     confirm_cart_path = 'api/v1/seller/UserCartRegisterOrder'
-    confirm_cart_response = json.loads(requests.post(url+confirm_cart_path, params=confirm_cart_params, headers=headers).text)
+    confirm_cart_response = json.loads(requests.post(url_partnership+confirm_cart_path, params=confirm_cart_params, headers=headers).text)
 
     return confirm_cart_response
 
 
-def register_customer():
-    return
+def register_customer(phone):
+    body_request = {
+        "phone": phone,
+        "deviceInfo": {
+            "geoAccuracyPermission": "",
+            "ip_address": "",
+            "geoAccuracyPermission": "",
+            "instance_id": "",
+            "ip_address": "",
+            "os": "",
+            "fcm_token": "",
+            "os_version": "",
+            "locale": "",
+            "device_model": "",
+            "geo_permission": "",
+            "push_permission": "",
+            "app_version": ""
+        }
+    }
+
+    register_customer_path = 'api/v1/register'
+    register_customer_response = json.loads(requests.post(url_mileonair+register_customer_path, json=body_request, headers=headers).text)
+    return register_customer_response
 
 
 def confirm_customer():
-    return
+    body_request = {
+        "code": "22222"
+    }
+
+    confirm_customer_path = 'api/v1/confirm'
+    confirm_customer_response = json.loads(requests.post(url_mileonair+confirm_customer_path, json=body_request, headers=headers).text)
+    customer_profile_token = confirm_customer_response['data']['token']
+    return customer_profile_token
 
 
-def login_customer():
-    return
+def login_customer(language_code, customer_profile_token):
+    body_request = {
+        {
+            "token": customer_profile_token,
+            "deviceInfo": {
+                "geoAccuracyPermission": "",
+                "ip_address": "",
+                "geoAccuracyPermission": "",
+                "instance_id": "",
+                "ip_address": "",
+                "os": "",
+                "fcm_token": "",
+                "os_version": "",
+                "locale": "",
+                "device_model": "",
+                "geo_permission": "",
+                "push_permission": "",
+                "app_version": ""
+            }
+            # "locale": language_code
+        }
+    }
+
+    login_customer_path = 'api/v1/login'
+    login_customer_response = json.loads(requests.post(url_mileonair+login_customer_path, json=body_request, headers=headers).text)
+    return login_customer_response
 
 
 def get_customer_profile():
-    return
+    customer_profile_path = 'api/v1/login'
+    customer_profile_response = json.loads(requests.get(url_mileonair+customer_profile_path, headers=headers).text)
+    return customer_profile_response
 
 
 def get_customer_cart(cart_token):
@@ -196,7 +258,7 @@ def get_customer_cart(cart_token):
     }
 
     customer_cart_path = 'api/v1/seller/userCart'
-    customer_cart_response = json.loads(requests.get(url+customer_cart_path, params=customer_cart_params, headers=headers).text)
+    customer_cart_response = json.loads(requests.get(url_partnership+customer_cart_path, params=customer_cart_params, headers=headers).text)
 
     return customer_cart_response
 
@@ -204,39 +266,46 @@ def get_customer_cart(cart_token):
 
 def main():
     date_from, date_to = choose_dates()
-    print('\nFrom ->', date_from, '\nTo ->', date_to)
+
+    dates_dict={}
+    dates_dict['date_from'] = date_from
+    dates_dict['date_to'] = date_to
+
+    print('\nFrom ->', dates_dict['date_from'], '\nTo ->', dates_dict['date_to'], '\n')
 
     cart_token = get_customer_cart_token()
 
     airports_dict = get_list_airports()
 
     airports_chooses = generate_flight(airports_dict)
-    print ('\n', airports_chooses)
+    print (airports_chooses)
 
     for lang in language_code:
-        print('\nLanguage ->', lang)
+        print('\n\nLanguage ->', lang)
 
-        for airport_id in airports_chooses:
-            # print('\nAirport CODE ->', airports_chooses[airport_id])
+        for airport_id, estimated_date in zip(airports_chooses, dates_dict):
+            print('\nAirport Code ->', airports_chooses[airport_id])
 
             categories_dict = get_list_categories(airports_chooses[airport_id], lang)
-            # print(categories_dict)
+            print(categories_dict)
 
             for category_id in categories_dict:
-                # print('Category ID ->', category_id)
+                print('Category ID ->', category_id)
 
-                points_dict = get_list_points_by_category(airports_chooses[airport_id], category_id, lang)
+                products_dict = get_list_points_by_category(airports_chooses[airport_id], category_id, lang)
 
-            #     product_id, product_quantity = choose_point(points_dict)
+                if products_dict != {}:
+                    product_id, product_quantity = choose_point(products_dict)
 
-            #     add_to_cart(airport_id, cart_token, product_id, product_quantity)
+                    add_to_cart(airport_id, cart_token, product_id, product_quantity, dates_dict[estimated_date])
 
-            # open_cart(cart_token)
+            cart_info = open_cart(cart_token)
+            print(cart_info)
             # confirm_cart(cart_token)
 
             # register_customer()
-            # confirm_customer()
-            # login_customer()
+            # customer_profile_token = confirm_customer()
+            # login_customer(lang, customer_profile_token)
 
             # get_customer_profile()
             # get_customer_cart(cart_token)
